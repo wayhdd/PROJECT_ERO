@@ -5,45 +5,73 @@ def odd_vertices(n, edges):
         deg[b] += 1
     return [a for a in range(n) if deg[a] % 2]
 
-def get_edge(edges, v1, v2):
-    for (a,b,c) in edges:
-        if (v1 == a and v2 == b) or (v1 == b and v2 == a):
-            return (a,b,c)
-    return None
+def graph_to_adj_weighted(G):
+    m = 0
+    for (a, b, w) in G:
+        if (a > m):
+            m = a
+        if (b > m):
+            m = b
+    adj = [[] for _ in range(m + 1)]
+    
+    for (a, b, w) in G:
+        adj[a].append((b,w))
+    return adj
 
-def get_edges(edges, odd):
-    res = []
-    for v1 in odd:
-        for v2 in odd:
-            if v1 != v2:
-                edge = get_edge(edges, v1, v2)
-                if edge and not edge in res:
-                    res.append(edge)
-    return res
+def dijkstra(G, s, path):
+    adj = graph_to_adj_weighted(G)
+    infi = 100000000
+    dist = [infi for i in range(len(adj))]
+    visited = [False for i in range(len(adj))]
+    for i in range(len(adj)):       
+        path[i] = -1
+    dist[s] = 0
+    path[s] = -1
+    current = s
+    sett = set()    
+    while (True):
+        visited[current] = True
+        for i in range(len(adj[current])): 
+            v,_ = adj[current][i];           
+            if (visited[v]):
+                continue
+            sett.add(v)
+            alt = dist[current] + adj[current][i][1]
+            if (alt < dist[v]):      
+                dist[v] = alt
+                path[v] = current;       
+        if current in sett:           
+            sett.remove(current);       
+        if (len(sett) == 0):
+            break
+        minDist = infi
+        index = 0
+        for a in sett:       
+            if (dist[a] < minDist):          
+                minDist = dist[a]
+                index = a;          
+        current = index
+    return dist
 
-def get_shortest(edges):
-    length = len(edges)
-    if length == 0:
-        return None
-    shortest, index = edges[0][2], 0
-    for i in range(1, length):
-        (_,_,dist) = edges[i]
-        if dist < shortest:
-            shortest, index = dist, i
-    return edges[index]
+def find_closest_odd(v, odd, dist):
+    closest = odd[1]
+    min_val = dist[closest]
+    for v in odd[2:]:
+        if dist[v] < min_val:
+            closest = v
+            min_val = dist[v]
+    return closest, min_val
 
 def to_eulerian(n, edges):
     odd = odd_vertices(n, edges)
     while len(odd) != 0 and len(odd) != 2:
-        odd = odd_vertices(n, edges)
-        edges2 = get_edges(edges, odd)
-        a,b,c = get_shortest(edges2)
-        edges.append((b,a,c))
-        if a in odd:
-            odd.remove(a)
-        if b in odd:
-            odd.remove(b)
-        edges2.remove((a,b,c))
+        v = odd[0]
+        path = [0 for i in range(len(edges))]
+        dist = dijkstra(edges, v, path)
+        closest, w = find_closest_odd(v, odd, dist)
+        edges.append((v, closest, w))
+        odd.remove(v)
+        odd.remove(closest)
     return edges
 
 def find_edge(edges, v):
@@ -73,5 +101,5 @@ def find_eulerian_path(n, edges):
     return path
 
 def convert_and_find_eulerian_path(n, edges):
-    edges = to_eulerian(n, edges)
-    return find_eulerian_path(n, edges)
+    G = to_eulerian(n, edges)
+    return find_eulerian_path(len(G), G)
