@@ -21,3 +21,8 @@ def replace_vertices_back(edges, l):
         (a,b,c) = edges[i]
         edges[i] = (l[a], l[b], c)
     return edges
+
+def replace_vertices_back_in_path(path, l):
+    for i in range(len(path)):
+        path[i] = l[path[i]]
+    return path
