@@ -5,24 +5,18 @@ def odd_vertices(n, edges):
         deg[b] += 1
     return [a for a in range(n) if deg[a] % 2]
 
-def graph_to_adj_weighted(G):
-    m = 0
-    for (a, b, w) in G:
-        if (a > m):
-            m = a
-        if (b > m):
-            m = b
-    adj = [[] for _ in range(m + 1)]
-    
+def graph_to_adj(n, G):
+    adj = [[] for _ in range(n)]
     for (a, b, w) in G:
         adj[a].append((b,w))
+        adj[b].append((a,w))
     return adj
 
-def dijkstra(G, s, path):
-    adj = graph_to_adj_weighted(G)
+def dijkstra(G, s, path, n):
+    adj = graph_to_adj(n, G)
     infi = 100000000
-    dist = [infi for i in range(len(adj))]
-    visited = [False for i in range(len(adj))]
+    dist = [infi for _ in range(len(adj))]
+    visited = [False for _ in range(len(adj))]
     for i in range(len(adj)):       
         path[i] = -1
     dist[s] = 0
@@ -66,8 +60,8 @@ def to_eulerian(n, edges):
     odd = odd_vertices(n, edges)
     while len(odd) != 0 and len(odd) != 2:
         v = odd[0]
-        path = [0 for i in range(len(edges))]
-        dist = dijkstra(edges, v, path)
+        path = [0 for _ in range(len(edges))]
+        dist = dijkstra(edges, v, path, n)
         closest, w = find_closest_odd(v, odd, dist)
         edges.append((v, closest, w))
         odd.remove(v)
@@ -102,4 +96,4 @@ def find_eulerian_path(n, edges):
 
 def convert_and_find_eulerian_path(n, edges):
     G = to_eulerian(n, edges)
-    return find_eulerian_path(len(G), G)
+    return find_eulerian_path(n, G)
