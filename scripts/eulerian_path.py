@@ -79,7 +79,7 @@ def find_eulerian_path(n, edges):
     if len(odd) == 2:
         stack = [odd[0]]
     else:
-        stack = [list(edges)[0]]
+        stack = [edges[0][0]]
     path = []
     while stack:
         v = stack[-1]
