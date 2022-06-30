@@ -1,3 +1,4 @@
+# return the list of odd vertices
 def odd_vertices(n, edges):
     deg = [0] * n
     for (a,b,c) in edges:
@@ -5,6 +6,7 @@ def odd_vertices(n, edges):
         deg[b] += 1
     return [a for a in range(n) if deg[a] % 2]
 
+# convert the graph to an adjacency list
 def graph_to_adj(n, G):
     adj = [[] for _ in range(n)]
     for (a, b, w) in G:
@@ -12,6 +14,7 @@ def graph_to_adj(n, G):
         adj[b].append((a,w))
     return adj
 
+# application of dijkstra's algorithm to find the shortest path from a certain vertex to all other vertices
 def dijkstra(G, s, path, n):
     adj = graph_to_adj(n, G)
     infi = 100000000
@@ -47,6 +50,7 @@ def dijkstra(G, s, path, n):
         current = index
     return dist
 
+# find the closest odd vertex to a certain vertex
 def find_closest_odd(v, odd, dist):
     closest = odd[1]
     min_val = dist[closest]
@@ -56,6 +60,7 @@ def find_closest_odd(v, odd, dist):
             min_val = dist[v]
     return closest, min_val
 
+# convert the graph to an eulerian graph
 def to_eulerian(n, edges):
     odd = odd_vertices(n, edges)
     while len(odd) != 0 and len(odd) != 2:
@@ -68,12 +73,14 @@ def to_eulerian(n, edges):
         odd.remove(closest)
     return edges
 
+# find the edge with a certain vertex
 def find_edge(edges, v):
     for (a,b,c) in edges:
         if a == v or b == v:
             return (a,b,c)
     return None
 
+# find the eulerian path
 def find_eulerian_path(n, edges):
     odd = odd_vertices(n, edges)
     if len(odd) == 2:
@@ -94,6 +101,7 @@ def find_eulerian_path(n, edges):
             path.append(stack.pop())
     return path
 
+# convert the given graph to an eulerian graph and find the eulerian path
 def convert_and_find_eulerian_path(n, edges):
     G = to_eulerian(n, edges)
     return find_eulerian_path(n, G)
