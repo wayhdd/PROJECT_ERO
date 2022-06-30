@@ -12,15 +12,18 @@ Projet réalisé dans le cadre du cours d'ERO à l'EPITA
 <p>Le projet s'articule autour de deux principaux axes : Une partie théorique sous forme de notebooks jupyter dans le dossier Theorie et une partie Application également sous forme de notebooks dans le dossier Application:<p>
   
   
-  -  La partie théorique a pour but d'expliquer notre démarche lors de la recherche des trajets optimaux du drone et des déneigeuses et le fonctionnement des algorithmes utilisés, au fur et à mesure du défilement des notebooks respectifs.
+  -  La partie théorique a pour but d'expliquer notre démarche lors de la recherche des trajets optimaux du drone et des déneigeuses et le fonctionnement des algorithmes utilisés, au fur et à mesure du défilement des notebooks respectifs. Les algorithmes ont été réalisés sans fonctions autres que celles des bibliothèques Python standards, scipy, numpy et pandas.
   <div style="background: #eeeedd; overflow:auto;width:auto;border:solid white;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Theorie
 ├── DeneigeuseTheorie.ipynb
 └── DroneTheorie.ipynb 
 </pre></div>
 
 
-  -  La partie Application est composée de deux notebooks détaillants les calculs effectués sur le cas réel de la ville de Montréal et de ses différents quartiers
+  -  La partie Application est composée de deux notebooks détaillants les calculs effectués sur le cas réel de la ville de Montréal et de ses différents quartiers, réalisés en utilisant toutes les librairies jugées utiles à la résolution du problème
   <div style="background: #eeeedd; overflow:auto;width:auto;border:solid white;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Application
 ├── DeneigeuseApp.ipynb
 └── DroneApp.ipynb
 </pre></div>
+
+
+  - Les dossiers supplémentaires data et scripts servent essentiellement à stocker données et fonctions dans le but de rendre les notebooks explicatifs plus lisibles
