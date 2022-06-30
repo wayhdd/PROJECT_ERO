@@ -13,4 +13,14 @@ Projet réalisé dans le cadre du cours d'ERO à l'EPITA
   
   
   -  La partie théorique a pour but d'expliquer notre démarche lors de la recherche des trajets optimaux du drone et des déneigeuses et le fonctionnement des algorithmes utilisés, au fur et à mesure du défilement des notebooks respectifs.
+  <div style="background: #eeeedd; overflow:auto;width:auto;border:solid white;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Theorie
+├── DeneigeuseTheorie.ipynb
+└── DroneTheorie.ipynb 
+</pre></div>
+
+
   -  La partie Application est composée de deux notebooks détaillants les calculs effectués sur le cas réel de la ville de Montréal et de ses différents quartiers
+  <div style="background: #eeeedd; overflow:auto;width:auto;border:solid white;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Application
+├── DeneigeuseApp.ipynb
+└── DroneApp.ipynb
+</pre></div>
