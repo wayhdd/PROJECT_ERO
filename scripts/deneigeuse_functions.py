@@ -1,4 +1,7 @@
 from copy import copy
+import sys
+sys.path.append('./scripts')
+import simplify_vertices as sv
 
 def dijkstra(G, start, end, is_directed):
     '''
@@ -402,3 +405,16 @@ def replace_nodes(G, path):
         else:
             i += 1
     return path
+
+def get_path_from_graph(G):
+    G_copy = copy(G)
+    # Convert vertices
+    extracted = sv.extract_vertices(G_copy)
+    new_real_G = sv.replace_vertices(G_copy, extracted)
+
+    G_eul = directed_to_eulerian(new_real_G)
+    eulerian_path = get_eulerian_path(G_eul)
+    true_path = replace_nodes(new_real_G, eulerian_path)
+    sv.replace_vertices_back_in_path(true_path, extracted)
+
+    return true_path
