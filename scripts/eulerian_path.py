@@ -1,3 +1,5 @@
+from copy import copy
+
 # return the list of odd vertices
 def odd_vertices(n, edges):
     deg = [0] * n
@@ -62,16 +64,17 @@ def find_closest_odd(v, odd, dist):
 
 # convert the graph to an eulerian graph
 def to_eulerian(n, edges):
-    odd = odd_vertices(n, edges)
+    g = copy(edges)
+    odd = odd_vertices(n, g)
     while len(odd) != 0 and len(odd) != 2:
         v = odd[0]
-        path = [0 for _ in range(len(edges))]
-        dist = dijkstra(edges, v, path, n)
+        path = [0 for _ in range(len(g))]
+        dist = dijkstra(g, v, path, n)
         closest, w = find_closest_odd(v, odd, dist)
-        edges.append((v, closest, w))
+        g.append((v, closest, w))
         odd.remove(v)
         odd.remove(closest)
-    return edges
+    return g
 
 # find the edge with a certain vertex
 def find_edge(edges, v):
@@ -82,21 +85,22 @@ def find_edge(edges, v):
 
 # find the eulerian path
 def find_eulerian_path(n, edges):
-    odd = odd_vertices(n, edges)
+    g = copy(edges)
+    odd = odd_vertices(n, g)
     if len(odd) == 2:
         stack = [odd[0]]
     else:
-        stack = [edges[0][0]]
+        stack = [g[0][0]]
     path = []
     while stack:
         v = stack[-1]
-        edge = find_edge(edges, v)
+        edge = find_edge(g, v)
         if edge:
             u = edge[0]
             if u == v:
                 u = edge[1]
             stack.append(u)
-            edges.remove(edge)
+            g.remove(edge)
         else:
             path.append(stack.pop())
     return path
