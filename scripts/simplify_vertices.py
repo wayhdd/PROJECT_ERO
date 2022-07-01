@@ -1,3 +1,5 @@
+from copy import copy
+
 # extract all vertices from a list of edges
 def extract_vertices(edges):
     vertices = []
@@ -17,10 +19,11 @@ def replace_vertices(edges, l):
 
 # replace indices with vertices
 def replace_vertices_back(edges, l):
-    for i in range(len(edges)):
-        (a,b,c) = edges[i]
-        edges[i] = (l[a], l[b], c)
-    return edges
+    g = copy(edges)
+    for i in range(len(g)):
+        (a,b,c) = g[i]
+        g[i] = (l[a], l[b], c)
+    return g
 
 # replace indices with vertices in a path
 def replace_vertices_back_in_path(path, l):
